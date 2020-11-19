@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <script type="text/javascript" src="IntersectionUtilities.js"></script>
+        <!--<script type="text/javascript" src="example\Lib\2D.js"></script>-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Month', 'Planned', 'Actual'],
+                ['Mar-09', 0, 0],
+                ['Apr-09', 0.00151929523245614, 0.0146364816491228],
+                ['May-09', 0.0124579992774453, 0.033083223565764],
+                ['Jun-09', 0.0309118903087972, 0.05],
+                ['Jul-09', 0.02, 0.1],
+                /*['Aug-09', 0.0746095488858985, 0.0746095488858985],
+                ['Sep-09', 0.114817895883872, 0.114817895883872],
+                ['Oct-09', 0.15656355950235, 0.15656355950235],
+                ['Nov-09', 0.201191315395714, 0.201191315395714],
+                ['Dec-09', 0.249953985795909, 0.249953985795909],*/
+                ['Jan-10', 0.300610725230242, 0.05],
+                ['Feb-10', 0.15, 0.3],
+                /*['Mar-10', 0.407625647744274, 0.381489],
+                ['Apr-10', 0.46528112323502, 0.4351855],
+                ['May-10', 0.528717160962978, 0.495409],
+                ['Jun-10', 0.584399247373237, 0.550191],
+                ['Jul-10', 0.635457755525976, 0.600298],
+                ['Aug-10', 0.682892477014679, 0.648201],
+                ['Sep-10', 0.729331361477304, 0.697411],
+                ['Oct-10', 0.775106438820932, 0.734041],
+                ['Nov-10', 0.817568962427278, 0.767669],
+                ['Dec-10', 0.846990001291726, 0.794953],
+                ['Jan-11', 0.875267241723479, 0.822881],
+                ['Feb-11', 0.899415677281897, 0.850654],
+                ['Mar-11', 0.920258084250725, 0.874219],
+                ['Apr-11', 0.940673161780297, 0.890452],
+                ['May-11', 0.954714998220322, 0.904493836440025],
+                ['Jun-11', 0.963550955141021, 0.913329793360723],
+                ['Jul-11', 0.967332955141021, 0.917111793360723],
+                ['Aug-11', 0.969564955141021, 0.919343793360723],
+                ['Sep-11', 0.970013508051817, 0.919792346271519],
+                ['Oct-11', 0.97001548091064, 0.919794319130343],
+                ['Nov-11', 0.970016467340052, 0.922854415668406],
+                ['Dec-11', 0.970017782579267, 0.924759340129943],
+                ['Jan-12', 0.970018988215215, 0.926288849483787],
+                ['Feb-12', 0.970021531011032, 0.927958856966862],
+                ['Mar-12', 0.97109277051861, 0.930075264449937],
+                ['Apr-12', 0.972014608376272, 0.932972073429627],
+                ['May-12', 0.973572412616675, 0.937072565402547],
+                ['Jun-12', 0.978533485751583, 0.943825144858543],
+                ['Jul-12', 0.986623440672842, 0.954049910192197],
+                ['Aug-12', 1, 0.971123151131509]*/
+            ]);
+
+            var options = {
+                title: 'S Curve \'Project-Trial\'',
+                crosshair: { trigger: 'both' },
+                vAxis: { title: 'Progress (%)' },
+                colors: ['#001122', '#33cc33', '#ffcc66', '#ff3300', '#001122'],
+                connectSteps: false,
+                seriesType: 'line',
+                curveType: 'function',
+                lineWidth: 2,
+                series: { 0: { type: 'line', lineDashStyle: [2, 2] } },
+                pointsVisible:true,
+                isStacked: false
+            };
+
+            var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+            var s = this.document;
+            loadShapes(s);
+
+
+            /*           function getElementByXpath(path) {
+               return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+             };
+           
+                   var path_list = getElementByXpath("//html[1]/body[1]/div[1]/div[1]/div[1]/div[1]").childNodes[0].childNodes[4].childNodes[1].childNodes[2].childNodes;
+           
+           // Taken from https://stackoverflow.com/questions/332422/how-do-i-get-the-name-of-an-objects-type-in-javascript
+           Object.prototype.getName = function () {
+           var funcNameRegex = /function (.{1,})\(/;
+           var results = (funcNameRegex).exec((this).constructor.toString());
+           return (results && results.length > 1) ? results[1] : "";
+           };
+           
+           // Taken from https://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
+           function uniq(a) {
+           var prims = { "boolean": {}, "number": {}, "string": {} }, objs = [];
+           
+           return a.filter(function (item) {
+               var type = typeof item;
+               if (type in prims)
+                   return prims[type].hasOwnProperty(item) ? false : (prims[type][item] = true);
+               else
+                   return objs.indexOf(item) >= 0 ? false : objs.push(item);
+           });
+           }
+           
+           var pathEl = path.node();
+           var intersections = [];
+           
+           // Kevin Lindsey's library
+           var shape1 = new Path(path_list(0));
+           var shape2 = new Path(path_list(1));
+           var overlays = Intersection.intersectShapes(shape1, shape2);
+           
+           for (i in overlays.points) {
+           if (overlays.points[i].constructor.name == "Point2D") {
+               intersections.push(overlays.points[i]);
+           }
+           }
+           
+           // The path will record 2 points for each intersection, so deduping is necessary
+           var deduped_intersections = uniq(intersections);
+           
+           var circles = svg.selectAll("circle")
+           .data(deduped_intersections)
+           .enter()
+           .append("circle");
+           
+           var circleAttributes = circles
+           .attr("cx", function (d) { return d.x; })
+           .attr("cy", function (d) { return d.y; })
+           .attr("r", "3")
+           .style("fill", "red");*/
+
+
+
+            //
+            //showIntersections();
+        }
+
+    </script>
+    
+</head>
+
+<body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+
+
+    <script type="text/javascript">
+    </script>
+</body>
+
+</html>
