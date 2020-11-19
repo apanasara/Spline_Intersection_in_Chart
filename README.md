@@ -1,6 +1,7 @@
 # Spline Intersection in Chart
 Finding Intersection Points of Two Splines in Chart for further randering
 
+### Thankfull to [www.kevlindev.com](http://www.kevlindev.com/gui/math/intersection/)
 ## Example 1 : [Line Intersection Points](https://github.com/apanasara/Spline_Intersection_in_Chart/tree/main/Examples/spLine%20Chart)
 ![Line Crossover Chart](https://github.com/apanasara/Spline_Intersection_in_Chart/blob/main/Examples/spLine%20Chart/Line-Crossover.JPG)
 
